@@ -38,6 +38,8 @@ public class MobController : MonoBehaviour {
     }
 
     void AttackPlayer() {
-        Time.timeScale = 0;
+        int damage = 30;
+        
+        Player.GetComponent<PlayerController>().takeHit(damage);
     }
 }

@@ -7,6 +7,9 @@ public class PlayerController : MonoBehaviour {
     Vector3 direction;
     public LayerMask floorMask;
 
+    public int Hp = 100;
+
+
     // Start is called before the first frame update
     void Start() {
         
@@ -35,13 +38,21 @@ public class PlayerController : MonoBehaviour {
             Debug.DrawRay(ray.origin, ray.direction * 100, Color.red);
             RaycastHit impact;
 
-            if (Physics.Raycast(ray, out impact, 100)) {
+            if (Physics.Raycast(ray, out impact, 100, floorMask)) {
                 Vector3 playerPosition = impact.point - transform.position;
-                playerPosition.y = transform.position.y;
+
+                playerPosition.y = 0;
 
                 Quaternion newRotation = Quaternion.LookRotation(playerPosition);
                 GetComponent<Rigidbody>().MoveRotation(newRotation);
             }
+        }
 
+        public void takeHit(int damage) {
+            Hp -= damage;
+            
+            if (Hp <= 0) {
+                Time.timeScale = 0;
+            }
         }
 }
